@@ -1,13 +1,81 @@
 <template>
   <main class="page">
     <div class="atmosphere" aria-hidden="true"></div>
-    <h1 class="title">这是一个作品</h1>
+
+    <div class="content">
+      <h1 class="title">作品</h1>
+
+      <section class="works" aria-label="作品列表">
+        <WorkItem
+          v-for="work in works"
+          :key="work.name"
+          :name="work.name"
+          :description="work.description"
+          :language="work.language"
+          :visibility="work.visibility"
+          :url="work.url"
+        />
+      </section>
+    </div>
   </main>
 </template>
 
 <script lang="ts">
+import WorkItem from '@/components/WorkItem.vue'
+
 export default {
   name: 'WorksView',
+  components: {
+    WorkItem,
+  },
+  data() {
+    return {
+      works: [
+        {
+          name: 'Vue网站开发学习',
+          description: '这是我制作的第一个网站项目（也就是本网站），通过WebStorm开发学习Vue这个集合框架如何使用。\n本网站有四个界面，主页、作品、百科、关于，每一栏都有作用。',
+          language: 'Vue',
+          visibility: 'Public',
+          url: 'https://github.com/ShiinaYumeka/my_first_website',
+        },
+        {
+          name: 'Android应用开发学习',
+          description: '这是我制作的首个安卓APP，用于学习Android Studio的开发。本应用有四个选项：主页、时间线、计算器、设置，支持滑动切换。',
+          language: 'Kotlin',
+          visibility: 'Public',
+          url: 'https://github.com/ShiinaYumeka/MyFirstApplication',
+        },
+        {
+          name: '战墙WallWar数据包',
+          description: '基于Minecraft数据包开发的墙战小游戏，是我首个独立制作并持续更新、运营的小游戏。本数据包在mc玩法的基础上拓展出六大流派：采矿、农业、伐木、渔业、炼药、建筑，游戏玩法丰富。',
+          language: 'mcfunction',
+          visibility: 'Public',
+          url: 'https://github.com/ShiinaYumeka/wallwar',
+        },
+        {
+          name: 'Slay the Nana',
+          description: '基于杀戮尖塔2开发的 C# 模组，是我首次接触C#以及非mc的二创开发。本模组添加了一个基础角色，以及全套角色卡牌、遗物、药水等，并可与原版角色、先古之民兼容。',
+          language: 'C#',
+          visibility: 'Public',
+          url: 'https://github.com/ShiinaYumeka/slay-the-nana',
+        },
+        {
+          name: '决斗之战客户端模组',
+          description: '基于Kotlin编写的客户端模组，致力于制作一个Minecraft客户端模组小游戏。',
+          language: 'Kotlin',
+          visibility: 'Public',
+          url: 'https://github.com/ShiinaYumeka/battle-war',
+        },
+        {
+          name: '战墙WallWar客户端插件',
+          description: '支持Minecraft Paper端 Java 插件扩展，用于帮助实现战墙小游戏中需要实现但难以用数据包实现的内容。',
+          language: 'Java',
+          visibility: 'Public',
+          url: 'https://github.com/ShiinaYumeka/wallwarplugins',
+        },
+      ],
+    }
+  },
 }
 </script>
 
@@ -15,9 +83,7 @@ export default {
 .page {
   position: relative;
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 5rem 1.5rem 2.5rem;
+  padding: 5.5rem 1.5rem 3rem;
   overflow: hidden;
 }
 
@@ -41,13 +107,23 @@ export default {
   pointer-events: none;
 }
 
-.title {
+.content {
   position: relative;
   z-index: 1;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.title {
   font-family: 'Fraunces', serif;
-  font-size: clamp(2.4rem, 7vw, 3.4rem);
+  font-size: clamp(2.2rem, 6vw, 3rem);
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.works {
+  border-top: 1px solid rgba(28, 40, 56, 0.1);
 }
 </style>

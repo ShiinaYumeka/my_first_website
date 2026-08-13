@@ -33,11 +33,10 @@ export default {
   data() {
     return {
       menu: [
-        { to: '/wiki/overview', label: '概览', icon: '◇' },
-        { to: '/wiki/projects', label: '笔记', icon: '▣' },
-        { to: '/wiki/minecraft', label: 'MC', icon: '⬡' },
-        { to: '/wiki/dev', label: '备忘', icon: '◇' },
-        { to: '/wiki/misc', label: '杂记', icon: '○' },
+        { to: '/wiki/overview', label: '总览', icon: '◇' },
+        { to: '/wiki/island-parts', label: 'Island配件', icon: '▣' },
+        { to: '/wiki/island-gear', label: 'Island装备', icon: '⬡' },
+        { to: '/wiki/wallwar-factions', label: '战墙流派', icon: '○' },
       ],
     }
   },

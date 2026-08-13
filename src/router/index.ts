@@ -4,10 +4,9 @@ import WorksView from '@/views/WorksView.vue'
 import WikiView from '@/views/WikiView.vue'
 import AboutView from '@/views/AboutView.vue'
 import WikiOverview from '@/views/wiki/WikiOverview.vue'
-import WikiProjects from '@/views/wiki/WikiProjects.vue'
-import WikiMinecraft from '@/views/wiki/WikiMinecraft.vue'
-import WikiDev from '@/views/wiki/WikiDev.vue'
-import WikiMisc from '@/views/wiki/WikiMisc.vue'
+import WikiIslandParts from '@/views/wiki/WikiIslandParts.vue'
+import WikiIslandGear from '@/views/wiki/WikiIslandGear.vue'
+import WikiWallwarFactions from '@/views/wiki/WikiWallwarFactions.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,24 +32,19 @@ const router = createRouter({
           component: WikiOverview,
         },
         {
-          path: 'projects',
-          name: 'wiki-projects',
-          component: WikiProjects,
+          path: 'island-parts',
+          name: 'wiki-island-parts',
+          component: WikiIslandParts,
         },
         {
-          path: 'minecraft',
-          name: 'wiki-minecraft',
-          component: WikiMinecraft,
+          path: 'island-gear',
+          name: 'wiki-island-gear',
+          component: WikiIslandGear,
         },
         {
-          path: 'dev',
-          name: 'wiki-dev',
-          component: WikiDev,
-        },
-        {
-          path: 'misc',
-          name: 'wiki-misc',
-          component: WikiMisc,
+          path: 'wallwar-factions',
+          name: 'wiki-wallwar-factions',
+          component: WikiWallwarFactions,
         },
       ],
     },

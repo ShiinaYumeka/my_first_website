@@ -14,7 +14,7 @@ export interface IslandPart {
 
 export interface IslandGearMode {
   name: string
-  price: number
+  price: string
 }
 
 export interface IslandGear {

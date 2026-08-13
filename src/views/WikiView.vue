@@ -33,10 +33,10 @@ export default {
   data() {
     return {
       menu: [
-        { to: '/wiki/overview', label: '总览', icon: '◇' },
-        { to: '/wiki/island-parts', label: 'Island配件', icon: '▣' },
-        { to: '/wiki/island-gear', label: 'Island装备', icon: '⬡' },
-        { to: '/wiki/wallwar-factions', label: '战墙流派', icon: '○' },
+        { to: '/wiki/overview', label: '总览', icon: '🎁' },
+        { to: '/wiki/islands-parts', label: 'Islands 配件', icon: '🔶' },
+        { to: '/wiki/islands-gear', label: 'Islands 装备', icon: '🔷' },
+        { to: '/wiki/wallwar-factions', label: '战墙', icon: '🧱' },
       ],
     }
   },
@@ -144,7 +144,7 @@ export default {
 .panel {
   flex: 1;
   min-width: 0;
-  padding: 2rem 1.75rem 3rem;
+  padding: 1.35rem 1.25rem 2.25rem;
 }
 
 @media (max-width: 720px) {

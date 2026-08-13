@@ -1,7 +1,6 @@
 <template>
   <div class="page-block">
     <h1 class="title">战墙流派</h1>
-    <p class="lead">六大流派条目已列出，内容暂留空。</p>
 
     <section class="grid" aria-label="流派列表">
       <FactionCard v-for="faction in factions" :key="faction.id" :name="faction.name" />
@@ -26,34 +25,21 @@ export default {
 
 <style scoped>
 .page-block {
-  max-width: 52rem;
+  width: 100%;
 }
 
 .title {
   font-family: 'Fraunces', serif;
-  font-size: clamp(1.9rem, 4vw, 2.5rem);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);
 }
 
-.lead {
-  margin-top: 0.6rem;
-  font-size: 0.98rem;
-  font-weight: 300;
-  color: var(--ink-soft);
-}
-
 .grid {
-  margin-top: 1.25rem;
+  margin-top: 0.9rem;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-@media (max-width: 720px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 0.65rem;
 }
 </style>

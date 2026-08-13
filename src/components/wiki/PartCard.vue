@@ -2,30 +2,18 @@
   <article class="card">
     <h2 class="name">{{ name }}</h2>
 
-    <dl class="fields">
-      <div class="field">
-        <dt>可装配对象</dt>
-        <dd>{{ attachToLabel }}</dd>
-      </div>
-      <div class="field">
-        <dt>品质范围</dt>
-        <dd>{{ qualityRange }}</dd>
-      </div>
-      <div class="field">
-        <dt>冲突配件</dt>
-        <dd>{{ conflictsLabel }}</dd>
-      </div>
-    </dl>
+    <p class="meta">
+      <span><em>品质</em>{{ qualityRange }}</span>
+      <span><em>装配</em>{{ attachToLabel }}</span>
+      <span><em>冲突</em>{{ conflictsLabel }}</span>
+    </p>
 
-    <div class="effects">
-      <h3 class="effects-title">配件效果</h3>
-      <ul>
-        <li v-for="(effect, index) in effects" :key="index">
-          <span class="effect-text">{{ effect.text }}</span>
-          <span class="effect-range">{{ effect.range }}</span>
-        </li>
-      </ul>
-    </div>
+    <ul class="effects">
+      <li v-for="(effect, index) in displayEffects" :key="index">
+        <span class="effect-text">{{ effect.text }}</span>
+        <span v-if="effect.range" class="effect-range">{{ effect.range }}</span>
+      </li>
+    </ul>
   </article>
 </template>
 
@@ -63,86 +51,84 @@ export default {
     conflictsLabel(): string {
       return this.conflicts.length ? this.conflicts.join('、') : '无'
     },
+    displayEffects(): { text: string; range: string }[] {
+      return this.effects.map((effect) => ({
+        text: effect.text.replace(/§./g, '').trim(),
+        range: this.numericRange(effect.text, effect.range),
+      }))
+    },
+  },
+  methods: {
+    numericRange(text: string, range: string): string {
+      const cleaned = range.replace(/§./g, '').trim()
+      if (!cleaned || cleaned === '固定' || cleaned === text.replace(/§./g, '').trim()) return ''
+      return cleaned
+    },
   },
 }
 </script>
 
 <style scoped>
 .card {
-  padding: 1.2rem 1.25rem;
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(28, 40, 56, 0.08);
-  box-shadow: 0 8px 24px rgba(28, 40, 56, 0.06);
+  padding: 0.7rem 0.8rem 0.75rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(28, 40, 56, 0.1);
   min-width: 0;
 }
 
 .name {
   font-family: 'Fraunces', serif;
-  font-size: 1.15rem;
+  font-size: 1.02rem;
   font-weight: 600;
+  line-height: 1.25;
   color: var(--ink);
 }
 
-.fields {
-  margin-top: 0.75rem;
+.meta {
+  margin-top: 0.35rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-}
-
-.field {
-  display: grid;
-  grid-template-columns: 6.5rem minmax(0, 1fr);
-  gap: 0.5rem;
-  font-size: 0.88rem;
-  line-height: 1.45;
-}
-
-.field dt {
-  color: var(--ink-soft);
-  font-weight: 500;
-}
-
-.field dd {
+  flex-wrap: wrap;
+  gap: 0.2rem 0.7rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
   color: var(--ink);
-  font-weight: 300;
+}
+
+.meta em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-right: 0.28rem;
 }
 
 .effects {
-  margin-top: 0.9rem;
-}
-
-.effects-title {
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--ink-soft);
-}
-
-.effects ul {
   list-style: none;
-  margin-top: 0.4rem;
-  padding: 0;
+  margin-top: 0.45rem;
+  padding: 0.4rem 0 0;
+  border-top: 1px solid rgba(28, 40, 56, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.18rem;
 }
 
 .effects li {
   display: flex;
   justify-content: space-between;
-  gap: 0.75rem;
-  font-size: 0.88rem;
+  align-items: baseline;
+  gap: 0.55rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
 }
 
 .effect-text {
   color: var(--ink);
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .effect-range {
   color: var(--sage-deep);
+  font-weight: 600;
   white-space: nowrap;
-  font-size: 0.82rem;
 }
 </style>

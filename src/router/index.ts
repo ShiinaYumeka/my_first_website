@@ -32,14 +32,22 @@ const router = createRouter({
           component: WikiOverview,
         },
         {
-          path: 'island-parts',
-          name: 'wiki-island-parts',
+          path: 'islands-parts',
+          name: 'wiki-islands-parts',
           component: WikiIslandParts,
         },
         {
-          path: 'island-gear',
-          name: 'wiki-island-gear',
+          path: 'island-parts',
+          redirect: '/wiki/islands-parts',
+        },
+        {
+          path: 'islands-gear',
+          name: 'wiki-islands-gear',
           component: WikiIslandGear,
+        },
+        {
+          path: 'island-gear',
+          redirect: '/wiki/islands-gear',
         },
         {
           path: 'wallwar-factions',

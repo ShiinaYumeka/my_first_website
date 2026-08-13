@@ -64,6 +64,8 @@
             </li>
           </ul>
         </section>
+
+        <RandomNumberPanel />
       </aside>
 
       <section class="main">
@@ -136,6 +138,7 @@
 <script lang="ts">
 import ContributionCalendar from '@/components/ContributionCalendar.vue'
 import GithubRepoCard from '@/components/GithubRepoCard.vue'
+import RandomNumberPanel from '@/components/RandomNumberPanel.vue'
 import { fetchGithubUser } from '@/api/githubUser'
 import { UapiError, type GithubUser } from '@/types/githubUser'
 
@@ -144,6 +147,7 @@ export default {
   components: {
     ContributionCalendar,
     GithubRepoCard,
+    RandomNumberPanel,
   },
   data() {
     return {

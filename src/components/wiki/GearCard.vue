@@ -1,26 +1,20 @@
 <template>
   <article class="card">
     <div class="header">
-      <h2 class="name">{{ name }}</h2>
-      <span class="tier">等阶 {{ tier }}</span>
+      <span class="tier">{{ tier }}</span>
+      <h2 class="name">{{ displayName }}</h2>
     </div>
 
-    <div class="modes">
-      <h3 class="label">启用模式 / 价格</h3>
-      <ul>
-        <li v-for="mode in modes" :key="mode.name">
-          <span>{{ mode.name }}</span>
-          <span class="price">{{ mode.price }}</span>
-        </li>
-      </ul>
-    </div>
+    <ul class="modes">
+      <li v-for="mode in modes" :key="mode.name">
+        <span class="mode-name">{{ mode.name }}</span>
+        <span class="price">{{ mode.price }}</span>
+      </li>
+    </ul>
 
-    <div class="effects">
-      <h3 class="label">效果</h3>
-      <ul>
-        <li v-for="(effect, index) in effects" :key="index">{{ effect }}</li>
-      </ul>
-    </div>
+    <ul v-if="effects.length" class="effects">
+      <li v-for="(effect, index) in effects" :key="index">{{ effect }}</li>
+    </ul>
   </article>
 </template>
 
@@ -47,74 +41,93 @@ export default {
       default: () => [],
     },
   },
+  computed: {
+    displayName(): string {
+      return this.name.replace(/\s*[（(][一二三四五六七八九十]阶[）)]\s*/g, '').trim()
+    },
+  },
 }
 </script>
 
 <style scoped>
 .card {
-  padding: 1.2rem 1.25rem;
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(28, 40, 56, 0.08);
-  box-shadow: 0 8px 24px rgba(28, 40, 56, 0.06);
+  padding: 0.7rem 0.8rem 0.75rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(28, 40, 56, 0.1);
   min-width: 0;
 }
 
 .header {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 0.75rem;
+  gap: 0.55rem;
+}
+
+.tier {
+  flex: 0 0 auto;
+  min-width: 1.4rem;
+  font-family: 'Fraunces', serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--sage-deep);
 }
 
 .name {
   font-family: 'Fraunces', serif;
-  font-size: 1.15rem;
+  font-size: 1.02rem;
   font-weight: 600;
+  line-height: 1.25;
   color: var(--ink);
-}
-
-.tier {
-  font-size: 0.8rem;
-  color: var(--sage-deep);
-  white-space: nowrap;
-}
-
-.label {
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--ink-soft);
 }
 
 .modes,
 .effects {
-  margin-top: 0.85rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.modes ul,
-.effects ul {
-  list-style: none;
+.modes {
   margin-top: 0.4rem;
-  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-}
-
-.modes li,
-.effects li {
-  font-size: 0.88rem;
-  font-weight: 300;
-  color: var(--ink);
+  gap: 0.12rem;
 }
 
 .modes li {
   display: flex;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.mode-name {
+  color: var(--ink-soft);
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .price {
-  color: var(--sage-deep);
+  color: var(--ink);
+  font-weight: 500;
+  text-align: right;
+}
+
+.effects {
+  margin-top: 0.4rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid rgba(28, 40, 56, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.effects li {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--ink);
+  font-weight: 400;
 }
 </style>

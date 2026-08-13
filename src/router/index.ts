@@ -3,6 +3,11 @@ import HomeView from '@/views/HomeView.vue'
 import WorksView from '@/views/WorksView.vue'
 import WikiView from '@/views/WikiView.vue'
 import AboutView from '@/views/AboutView.vue'
+import WikiOverview from '@/views/wiki/WikiOverview.vue'
+import WikiProjects from '@/views/wiki/WikiProjects.vue'
+import WikiMinecraft from '@/views/wiki/WikiMinecraft.vue'
+import WikiDev from '@/views/wiki/WikiDev.vue'
+import WikiMisc from '@/views/wiki/WikiMisc.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,8 +24,35 @@ const router = createRouter({
     },
     {
       path: '/wiki',
-      name: 'wiki',
       component: WikiView,
+      redirect: '/wiki/overview',
+      children: [
+        {
+          path: 'overview',
+          name: 'wiki-overview',
+          component: WikiOverview,
+        },
+        {
+          path: 'projects',
+          name: 'wiki-projects',
+          component: WikiProjects,
+        },
+        {
+          path: 'minecraft',
+          name: 'wiki-minecraft',
+          component: WikiMinecraft,
+        },
+        {
+          path: 'dev',
+          name: 'wiki-dev',
+          component: WikiDev,
+        },
+        {
+          path: 'misc',
+          name: 'wiki-misc',
+          component: WikiMisc,
+        },
+      ],
     },
     {
       path: '/about',

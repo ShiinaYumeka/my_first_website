@@ -1,11 +1,8 @@
 <template>
   <article class="work-item">
-    <div class="header">
-      <a class="name" :href="url" target="_blank" rel="noopener noreferrer">
-        {{ name }}
-      </a>
-      <span class="visibility">{{ visibility }}</span>
-    </div>
+    <a class="name" :href="url" target="_blank" rel="noopener noreferrer">
+      {{ name }}
+    </a>
     <p v-if="description" class="description">{{ description }}</p>
     <p class="meta">
       <span class="language">{{ language }}</span>
@@ -29,10 +26,6 @@ export default {
       type: String,
       required: true,
     },
-    visibility: {
-      type: String,
-      required: true,
-    },
     url: {
       type: String,
       required: true,
@@ -43,18 +36,25 @@ export default {
 
 <style scoped>
 .work-item {
-  padding: 1.35rem 0;
-  border-bottom: 1px solid rgba(28, 40, 56, 0.1);
+  padding: 1.35rem 1.4rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(28, 40, 56, 0.08);
+  box-shadow: 0 8px 24px rgba(28, 40, 56, 0.06);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
-.header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.65rem;
+.work-item:hover {
+  border-color: rgba(79, 115, 105, 0.28);
+  box-shadow: 0 12px 28px rgba(28, 40, 56, 0.1);
+  transform: translateY(-2px);
 }
 
 .name {
+  display: inline-block;
   font-family: 'Fraunces', serif;
   font-size: 1.25rem;
   font-weight: 600;
@@ -72,26 +72,17 @@ export default {
   border-bottom-color: var(--sage);
 }
 
-.visibility {
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--ink-soft);
-  padding: 0.1rem 0.45rem;
-  border: 1px solid rgba(28, 40, 56, 0.14);
-  border-radius: 0.25rem;
-}
-
 .description {
-  margin-top: 0.45rem;
+  margin-top: 0.55rem;
   font-size: 0.95rem;
   font-weight: 300;
   color: var(--ink-soft);
-  line-height: 1.55;
+  line-height: 1.6;
+  white-space: pre-line;
 }
 
 .meta {
-  margin-top: 0.65rem;
+  margin-top: 0.85rem;
   font-size: 0.8rem;
   color: var(--ink-soft);
 }

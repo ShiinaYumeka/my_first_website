@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import WorksView from '@/views/WorksView.vue'
 import WikiView from '@/views/WikiView.vue'
@@ -9,7 +9,7 @@ import WikiIslandGear from '@/views/wiki/WikiIslandGear.vue'
 import WikiWallwarFactions from '@/views/wiki/WikiWallwarFactions.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',

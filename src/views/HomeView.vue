@@ -162,7 +162,9 @@ export default {
       return this.user?.name || this.user?.login || 'ShiinaYumeka'
     },
     avatarSrc(): string {
-      if (this.avatarFailed || !this.user?.avatar_url) return '/icon.jpg'
+      if (this.avatarFailed || !this.user?.avatar_url) {
+        return `${import.meta.env.BASE_URL}icon.jpg`
+      }
       return this.user.avatar_url
     },
     blogHref(): string {

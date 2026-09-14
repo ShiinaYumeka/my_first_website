@@ -11,8 +11,8 @@
             v-for="item in menu"
             :key="item.to"
             class="menu-item"
+            :class="{ 'is-active': isMenuActive(item.to) }"
             :to="item.to"
-            active-class="is-active"
           >
             <span class="menu-icon" aria-hidden="true">{{ item.icon }}</span>
             <span class="menu-label">{{ item.label }}</span>
@@ -36,9 +36,16 @@ export default {
         { to: '/wiki/overview', label: '总览', icon: '🎁' },
         { to: '/wiki/islands-parts', label: 'Islands 配件', icon: '🔶' },
         { to: '/wiki/islands-gear', label: 'Islands 装备', icon: '🔷' },
-        { to: '/wiki/wallwar-factions', label: '战墙', icon: '🧱' },
+        { to: '/wiki/wallwar-factions', label: '战墙流派', icon: '🧱' },
+        { to: '/wiki/wallwar-items', label: '战墙道具', icon: '⚔️' },
       ],
     }
+  },
+  methods: {
+    isMenuActive(to: string): boolean {
+      const path = this.$route.path
+      return path === to || path.startsWith(`${to}/`)
+    },
   },
 }
 </script>

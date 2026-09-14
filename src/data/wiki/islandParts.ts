@@ -7,7 +7,7 @@ export const islandParts: IslandPart[] = [
     attachTo: [`任何工具`],
     qualityRange: `白 ~ 金`,
     conflicts: [],
-    effects: [{ text: `盔甲韧性`, range: `+0.3 ~ +1.5` }],
+    effects: [{ text: `盔甲韧性`, range: `+0.4 ~ +2` }],
   },
   {
     id: `exoskeleton`,
@@ -15,7 +15,7 @@ export const islandParts: IslandPart[] = [
     attachTo: [`任何工具`],
     qualityRange: `白 ~ 金`,
     conflicts: [],
-    effects: [{ text: `护甲值`, range: `+0.4 ~ +1.2` }],
+    effects: [{ text: `护甲值`, range: `+0.1 ~ +1` }],
   },
   {
     id: `frost_ejector`,
@@ -71,7 +71,7 @@ export const islandParts: IslandPart[] = [
     attachTo: [`核心火炮`],
     qualityRange: `蓝`,
     conflicts: [],
-    effects: [{ text: `火球数量`, range: `乘3` }, { text: `爆炸威力`, range: `-50%` }, { text: `火球体积`, range: `减半` }, { text: `火球连射间隔`, range: `缩短1刻` }],
+    effects: [{ text: `火球数量`, range: `×3` }, { text: `爆炸威力`, range: `-50%` }, { text: `火球体积`, range: `-50%` }, { text: `火球连射间隔`, range: `-1` }],
   },
   {
     id: `detonation_propellant`,
@@ -103,7 +103,7 @@ export const islandParts: IslandPart[] = [
     attachTo: [`核心火炮`],
     qualityRange: `白`,
     conflicts: [],
-    effects: [{ text: `空阻降低`, range: `空阻削弱九成` }],
+    effects: [{ text: `空气阻力降低`, range: `+0.9` }],
   },
   {
     id: `radioactive_coating`,
@@ -119,7 +119,7 @@ export const islandParts: IslandPart[] = [
     attachTo: [`核心火炮`],
     qualityRange: `紫 ~ 金`,
     conflicts: [`烬素芯核`, `制导装置`],
-    effects: [{ text: `发射音爆，造成爆炸威力的伤害`, range: `+3 ~ +5` }, { text: `弹道精准度`, range: `散布x5` }],
+    effects: [{ text: `发射音爆，造成爆炸威力的伤害`, range: `+2.5 ~ +4` }, { text: `弹道偏差`, range: `×3` }],
   },
   {
     id: `tamahagane_flywheel`,
@@ -135,7 +135,7 @@ export const islandParts: IslandPart[] = [
     attachTo: [`核心火炮`],
     qualityRange: `蓝`,
     conflicts: [],
-    effects: [{ text: `一次性射出所有火球`, range: `` }, { text: `弹道精准度`, range: `散布x20` }, { text: `蓄力速度`, range: `-50%` }],
+    effects: [{ text: `一次性射出所有火球`, range: `` }, { text: `弹道偏差`, range: `×20` }, { text: `蓄力速度`, range: `-50%` }],
   },
   {
     id: `aerodynamic_mechanism`,
@@ -143,7 +143,7 @@ export const islandParts: IslandPart[] = [
     attachTo: [`匕首`],
     qualityRange: `白 ~ 金`,
     conflicts: [],
-    effects: [{ text: `匕首连续使用次数`, range: `x2` }, { text: `蓄力速度`, range: `-20% ~ -50%` }],
+    effects: [{ text: `匕首连续使用次数`, range: `×2` }, { text: `蓄力速度`, range: `-20% ~ -50%` }],
   },
   {
     id: `burst_device`,
@@ -159,7 +159,7 @@ export const islandParts: IslandPart[] = [
     attachTo: [`匕首`],
     qualityRange: `绿`,
     conflicts: [],
-    effects: [{ text: `匕首连续使用次数`, range: `+3` }, { text: `匕首弹射物伤害减半`, range: `` }, { text: `蓄力速度`, range: `-65%` }, { text: `匕刃弹出间隔`, range: `延长1刻` }],
+    effects: [{ text: `匕首连续使用次数`, range: `+3` }, { text: `匕首弹射物伤害减半`, range: `` }, { text: `蓄力速度`, range: `-65%` }, { text: `匕刃弹出间隔`, range: `+2` }],
   },
   {
     id: `eccentric_wheel`,
@@ -196,7 +196,7 @@ export const islandParts: IslandPart[] = [
   {
     id: `blast_element`,
     name: `爆破元件`,
-    attachTo: [`剑与斧`],
+    attachTo: [`剑斧矛`],
     qualityRange: `金`,
     conflicts: [],
     effects: [{ text: `满蓄力命中时产生爆炸`, range: `` }],
@@ -231,7 +231,7 @@ export const islandParts: IslandPart[] = [
     attachTo: [`剑与斧`],
     qualityRange: `蓝 ~ 金`,
     conflicts: [],
-    effects: [{ text: `近战伤害`, range: `+60% ~ +100%` }, { text: `近战攻击速度`, range: `-50%` }],
+    effects: [{ text: `近战伤害`, range: `+50% ~ +100%` }, { text: `近战攻击速度`, range: `-50%` }],
   },
   {
     id: `resonant_blade`,
@@ -431,7 +431,7 @@ export const islandParts: IslandPart[] = [
     attachTo: [`普通弩`],
     qualityRange: `金`,
     conflicts: [],
-    effects: [{ text: `精准度大幅降低`, range: `` }, { text: `弹射物自动追踪目标`, range: `` }],
+    effects: [{ text: `弹道偏差`, range: `×2` }, { text: `弹射物自动追踪目标`, range: `` }],
   },
   {
     id: `bombarding_ballista`,
@@ -495,7 +495,7 @@ export const islandParts: IslandPart[] = [
     attachTo: [`弹射器`],
     qualityRange: `绿 ~ 金`,
     conflicts: [],
-    effects: [{ text: `蓄力速度`, range: `-20% ~ -45%` }, { text: `每次装填恢复次`, range: `2` }],
+    effects: [{ text: `蓄力速度`, range: `-20% ~ -45%` }, { text: `每次装填额外恢复`, range: `+1` }],
   },
   {
     id: `storm_core`,
@@ -528,5 +528,61 @@ export const islandParts: IslandPart[] = [
     qualityRange: `白 ~ 金`,
     conflicts: [],
     effects: [{ text: `挖掘效率`, range: `+1 ~ +12` }],
+  },
+  {
+    id: `spin_engine`,
+    name: `白璇引擎`,
+    attachTo: [`胸甲`],
+    qualityRange: `蓝 ~ 金`,
+    conflicts: [],
+    effects: [{ text: `每1点移动速度: 护甲值`, range: `+0.2 ~ +0.5` }],
+  },
+  {
+    id: `aerodynamic_component`,
+    name: `气动力组件`,
+    attachTo: [`任何工具`],
+    qualityRange: `白 ~ 金`,
+    conflicts: [],
+    effects: [{ text: `移动速度`, range: `+10% ~ +40%` }, { text: `重力`, range: `+30%` }],
+  },
+  {
+    id: `sloped_plate`,
+    name: `倾斜甲片`,
+    attachTo: [`胸甲、盾`],
+    qualityRange: `白 ~ 金`,
+    conflicts: [],
+    effects: [{ text: `对于弹射物伤害: 护甲值`, range: `+0.2 ~ +1` }, { text: `对于弹射物伤害: 盔甲韧性`, range: `+0.4 ~ +2` }, { text: `移动速度`, range: `-5%` }],
+  },
+  {
+    id: `spaced_armor`,
+    name: `隙甲模块`,
+    attachTo: [`胸甲、盾`],
+    qualityRange: `白 ~ 金`,
+    conflicts: [],
+    effects: [{ text: `对于爆炸伤害: 护甲值`, range: `+0.2 ~ +1` }, { text: `对于爆炸伤害: 盔甲韧性`, range: `+0.4 ~ +2` }, { text: `移动速度`, range: `-5%` }],
+  },
+  {
+    id: `heavy_steel_shell`,
+    name: `重钢甲壳`,
+    attachTo: [`胸甲、盾`],
+    qualityRange: `紫 ~ 金`,
+    conflicts: [],
+    effects: [{ text: `护甲值`, range: `+1.5 ~ +2` }, { text: `盔甲韧性`, range: `+3 ~ +4.5` }, { text: `移动速度`, range: `-40%` }, { text: `重力`, range: `+30%` }],
+  },
+  {
+    id: `kinetic_linkage`,
+    name: `械动系统`,
+    attachTo: [`匕首、弹射器、自动弩`],
+    qualityRange: `蓝`,
+    conflicts: [],
+    effects: [{ text: `每使用 10 次，其余同配件装备立即完成一次蓄力`, range: `` }],
+  },
+  {
+    id: `linked_core`,
+    name: `联核系统`,
+    attachTo: [`胸甲`],
+    qualityRange: `紫`,
+    conflicts: [],
+    effects: [{ text: `胸甲和副手的每个“核心”配件使主手“核心”配件效果+10%`, range: `` }],
   }
 ]

@@ -7,6 +7,8 @@ import WikiOverview from '@/views/wiki/WikiOverview.vue'
 import WikiIslandParts from '@/views/wiki/WikiIslandParts.vue'
 import WikiIslandGear from '@/views/wiki/WikiIslandGear.vue'
 import WikiWallwarFactions from '@/views/wiki/WikiWallwarFactions.vue'
+import WikiWallwarFactionDetail from '@/views/wiki/WikiWallwarFactionDetail.vue'
+import WikiWallwarItems from '@/views/wiki/WikiWallwarItems.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -53,6 +55,16 @@ const router = createRouter({
           path: 'wallwar-factions',
           name: 'wiki-wallwar-factions',
           component: WikiWallwarFactions,
+        },
+        {
+          path: 'wallwar-factions/:id',
+          name: 'wiki-wallwar-faction',
+          component: WikiWallwarFactionDetail,
+        },
+        {
+          path: 'wallwar-items',
+          name: 'wiki-wallwar-items',
+          component: WikiWallwarItems,
         },
       ],
     },

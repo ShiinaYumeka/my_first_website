@@ -8,7 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from wiki_lang import flatten_lang, load_yaml, lookup, ts_string, ts_string_list, write_ts_array
+from wiki_lang import flatten_lang, load_yaml, lookup, strip_format, ts_string, ts_string_list, write_ts_array
 
 HG_WAR = Path(r"e:\mc\hg-war")
 WEBSITE = Path(__file__).resolve().parents[1]
@@ -57,17 +57,21 @@ def upgrade_type_of(item: dict) -> str:
     return match.group(1) if match else "unknown"
 
 
-def collect_translates(node: object) -> list[str]:
-    keys: list[str] = []
+def collect_lore_texts(node: object, lang: dict[str, str]) -> list[str]:
+    texts: list[str] = []
     if isinstance(node, dict):
         if isinstance(node.get("translate"), str):
-            keys.append(node["translate"])
+            texts.append(lookup(lang, node["translate"], node["translate"]))
+        elif isinstance(node.get("text"), str):
+            cleaned = strip_format(node["text"]).strip()
+            if cleaned:
+                texts.append(cleaned)
         for value in node.values():
-            keys.extend(collect_translates(value))
+            texts.extend(collect_lore_texts(value, lang))
     elif isinstance(node, list):
         for value in node:
-            keys.extend(collect_translates(value))
-    return keys
+            texts.extend(collect_lore_texts(value, lang))
+    return texts
 
 
 def format_costs(costs: dict, lang: dict[str, str]) -> str:
@@ -91,6 +95,9 @@ def tier_from_name(name: str, fallback: int) -> int:
     match = re.search(r"[（(]([一二三四五六])阶[）)]", name)
     if match:
         return CN_TIER.get(match.group(1), fallback)
+    match = re.search(r"([一二三四五六])级", name)
+    if match:
+        return CN_TIER.get(match.group(1), fallback)
     return fallback
 
 
@@ -99,6 +106,14 @@ def extract_name_key(components: dict) -> str:
         node = components.get(field) or {}
         if isinstance(node, dict) and isinstance(node.get("translate"), str):
             return node["translate"]
+    return ""
+
+
+def extract_literal_name(components: dict) -> str:
+    for field in ("minecraft:custom_name", "minecraft:item_name"):
+        node = components.get(field) or {}
+        if isinstance(node, dict) and isinstance(node.get("text"), str):
+            return strip_format(node["text"]).strip()
     return ""
 
 
@@ -146,13 +161,20 @@ def main() -> int:
                 components = icon.get("components") or {}
                 name_key = extract_name_key(components)
                 guessed_tier = int(entry.get("value", 0)) + 1
-                name, tier_num = resolve_name(lang, name_key, upgrade_type, guessed_tier)
+                if name_key:
+                    name, tier_num = resolve_name(lang, name_key, upgrade_type, guessed_tier)
+                else:
+                    name = extract_literal_name(components)
+                    tier_num = guessed_tier
                 if not name:
                     continue
-                tier_num = tier_from_name(name, tier_num)
-                lore_keys = collect_translates(components.get("minecraft:lore") or [])
-                effects = [lookup(lang, key, key) for key in lore_keys if lookup(lang, key, "") not in {"", " "}]
-                group_key = (upgrade_type, str(tier_num), name)
+                tier_num = tier_from_name(name, guessed_tier)
+                effects = [
+                    text
+                    for text in collect_lore_texts(components.get("minecraft:lore") or [], lang)
+                    if text not in {"", " "}
+                ]
+                group_key = (upgrade_type, str(tier_num))
                 ident = f"{upgrade_type}-{tier_num}"
                 record = grouped.setdefault(
                     group_key,
@@ -164,6 +186,9 @@ def main() -> int:
                         "effects": [],
                     },
                 )
+                if name_key:
+                    record["name"] = name
+                    record["tier"] = roman(tier_num)
                 price = format_costs(costs, lang)
                 for mode in mode_names:
                     record["modes"][mode] = price
@@ -174,7 +199,10 @@ def main() -> int:
     # Stable unique ids when names collide on upgrade_type-tier
     seen_ids: dict[str, int] = {}
     items_ts: list[str] = []
-    for (_upgrade, _tier, name), record in sorted(grouped.items(), key=lambda item: (item[0][0], int(item[0][1]), item[0][2])):
+    for (_upgrade, _tier), record in sorted(
+        grouped.items(),
+        key=lambda item: (item[0][0], int(item[0][1])),
+    ):
         ident = record["id"]
         seen_ids[ident] = seen_ids.get(ident, 0) + 1
         if seen_ids[ident] > 1:

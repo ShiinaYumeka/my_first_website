@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from wiki_lang import flatten_lang, load_yaml, lookup, ts_string, ts_string_list, write_ts_array
+from wiki_lang import flatten_lang, load_yaml, lookup, strip_format, ts_string, ts_string_list, write_ts_array
 
 HG_WAR = Path(r"e:\mc\hg-war")
 WEBSITE = Path(__file__).resolve().parents[1]
@@ -100,15 +100,18 @@ def effect_text(lang: dict[str, str], effect: str, kind: str, percent: bool, fix
     if kind == "upgrade":
         return lookup(lang, f"text.hgwar.accessory.effect.{key}.upgrade", "%s")
     type_name = "percentage" if percent else "float"
+    candidates = [f"text.hgwar.accessory.effect.{key}"]
     if fixed:
-        template = lookup(
-            lang,
-            f"text.hgwar.accessory.effect.{key}.{type_name}.fixed",
-            lookup(lang, f"text.hgwar.accessory.effect.{key}.{type_name}", f"{key}: %s"),
-        )
-    else:
-        template = lookup(lang, f"text.hgwar.accessory.effect.{key}.{type_name}", f"{key}: %s")
-    cleaned = template.replace("%s秒", "").replace("%sx", "").replace("%s", "")
+        candidates.append(f"text.hgwar.accessory.effect.{key}.{type_name}.fixed")
+    candidates.append(f"text.hgwar.accessory.effect.{key}.{type_name}")
+    template = next((lang[item] for item in candidates if item in lang), f"{key}: %s")
+    cleaned = (
+        strip_format(template)
+        .replace("%s秒", "")
+        .replace("%sx", "")
+        .replace("%s刻", "")
+        .replace("%s", "")
+    )
     return re.sub(r"\s+", " ", cleaned).strip(" :")
 
 
@@ -136,10 +139,13 @@ def effect_range(
         display_key = f"{display:.2f}".rstrip("0").rstrip(".")
         specific = lang.get(f"text.hgwar.accessory.effect.{key}.{type_name}.fixed.{display_key}")
         if specific:
-            return specific
+            return strip_format(specific)
         alt = lang.get(f"text.hgwar.accessory.effect.{key}.{type_name}.fixed.{min_v:g}")
         if alt:
-            return alt
+            return strip_format(alt)
+        if percent and abs(display) > 1:
+            magnitude = f"{abs(display):.2f}".rstrip("0").rstrip(".")
+            return f"×{magnitude}"
         return format_number(display, percent, kind in {"NEGATIVE", "REVERSED"} and display <= 0)
     left = format_number(signed_value(min_v, kind), percent, kind in {"NEGATIVE", "REVERSED"})
     right = format_number(signed_value(max_v, kind), percent, kind in {"NEGATIVE", "REVERSED"})

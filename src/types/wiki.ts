@@ -25,9 +25,41 @@ export interface IslandGear {
   effects: string[]
 }
 
+export interface WallwarNamedNote {
+  name: string
+  text: string
+}
+
+export interface WallwarAchievement {
+  name: string
+  condition: string
+  reward: string
+}
+
+export interface WallwarFactionBlock {
+  heading: string
+  paragraphs: string[]
+  items?: WallwarNamedNote[]
+}
+
+export interface WallwarFactionSection {
+  heading: string
+  paragraphs: string[]
+  items?: WallwarNamedNote[]
+  achievements?: WallwarAchievement[]
+  blocks?: WallwarFactionBlock[]
+}
+
 export interface WallwarFaction {
   id: string
   name: string
   summary: string
-  details: string[]
+  sections: WallwarFactionSection[]
+}
+
+export interface WallwarItem {
+  id: string
+  name: string
+  category: string
+  effects: string[]
 }
